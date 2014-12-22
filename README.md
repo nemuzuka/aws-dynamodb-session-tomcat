@@ -27,3 +27,18 @@ you'll need to copy the SDK third-party dependencies into your Tomcat install's 
 If you encounter problems with the session manager, feel free to report them as GitHub issues for this project.  
 
 **If you'd like to contribute a new feature or bug fix, we'd love to see GitHub pull requests from you!**
+
+
+
+改修内容
+---------------------
+* sticky sessionを使用し、一度振り分けたTomcatにずっと振り分けられるようにする
+* Tomcatが動作している間はDynamoDBにputしないようにcontext.xmlのmaxIdleBackupの値を調整する
+
+ことで、
+
+1. Tomcatが動作している間はTomcatのメモリ上のみに存在
+2. Tomcatの停止前にメモリ上のSessionをDynamoDBにput
+3. 別のTomcatに振り分けられた時に、DynamoDBから取得しメモリ上のSessionに格納(1の状態になる)
+
+という状態になります。DynamoDBはあくまでもTomcatが停止した時のSession情報の格納先として使用します。
