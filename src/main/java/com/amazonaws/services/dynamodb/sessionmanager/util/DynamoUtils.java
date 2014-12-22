@@ -105,7 +105,7 @@ public class DynamoUtils {
         attributes.put(SessionTableAttributes.SESSION_ID_KEY, new AttributeValue(session.getId()));
         ByteBuffer b = ByteBuffer.wrap(byteArray);
         attributes.put(SessionTableAttributes.SESSION_DATA_ATTRIBUTE, new AttributeValue().withB(b));
-        attributes.put(SessionTableAttributes.CREATED_AT_ATTRIBUTE, new AttributeValue().withN(Long.toString(session.getCreationTime())));
+        attributes.put(SessionTableAttributes.CREATED_AT_ATTRIBUTE, new AttributeValue().withN(Long.toString(session.getLastAccessedTime())));
         attributes.put(SessionTableAttributes.LAST_UPDATED_AT_ATTRIBUTE, new AttributeValue().withN(Long.toString(System.currentTimeMillis())));
 
         try {

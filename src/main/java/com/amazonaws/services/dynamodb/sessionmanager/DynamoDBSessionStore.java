@@ -99,7 +99,8 @@ public class DynamoDBSessionStore extends StoreBase {
         return keys.toArray(new String[0]);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Session load(String id) throws ClassNotFoundException, IOException {
         Map<String, AttributeValue> item = DynamoUtils.loadItemBySessionId(dynamo, sessionTableName, id);
         if (item == null || !item.containsKey(SessionTableAttributes.SESSION_ID_KEY) || !item.containsKey(SessionTableAttributes.SESSION_DATA_ATTRIBUTE)) {
@@ -123,7 +124,9 @@ public class DynamoDBSessionStore extends StoreBase {
 
             readObject = objectInputStream.readObject();
         } finally {
-            try { objectInputStream.close(); } catch (Exception e) {}
+            try { objectInputStream.close(); } catch (Exception e) {
+            	System.out.println(e);
+            }
         }
 
         if (readObject instanceof Map<?, ?>) {
@@ -137,7 +140,6 @@ public class DynamoDBSessionStore extends StoreBase {
         }
 
 
-        keys.add(id);
         manager.add(session);
 
         return session;
