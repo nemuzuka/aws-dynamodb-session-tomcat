@@ -4,6 +4,7 @@
 
 .project
 .classpath
+dependency-reduced-pom.xml
 
 # Package Files #
 *.jar
